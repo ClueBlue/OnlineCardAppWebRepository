@@ -54,3 +54,25 @@ app.post('/addcard', async (req, res) => {
   }
 });
 
+// Example Route: Update a card
+router.put('/update/:id', async (req, res) => {
+  try {
+    const { card_name } = req.params;
+    await dbConfig.query(`UPDATE cards SET card_name = ? WHERE id = ?`, [card_name, req.params.id]);
+    res.status(200).json({ message: 'Card card_name updated successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error - could not update card card_name' });
+  }
+});
+
+// Example Route: Delete a card
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    await dbConfig.query(`DELETE FROM cards WHERE id = ?`, [req.params.id]);
+    res.status(201).json({ message: 'Card id deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error - could not delete card id' });
+  }
+});
+
+
